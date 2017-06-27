@@ -6,24 +6,11 @@ const AutoLaunch = require( "auto-launch" );
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
+let launcher = new AutoLaunch( { name: "Emojis Everywhere" } );
 
 app.on( "ready", function() {
     win = createWindow();
-
-    const trayIconImg = path.join( __dirname, "build/icon.ico" );
-    trayIcon = new Tray( trayIconImg );
-    const contextMenu = Menu.buildFromTemplate( [
-        {
-            label: "Show",
-            click: () => win.show()
-        },
-        {
-            label: "Quit",
-            click: app.quit
-        }
-    ] );
-    trayIcon.setToolTip( "Emojis Everywhere" );
-    trayIcon.setContextMenu( contextMenu );
+    let trayIcon = createTrayIcon();
 
     globalShortcut.register( "CommandOrControl+Alt+A", () => {
         if ( win.isVisible() ) {
@@ -33,6 +20,40 @@ app.on( "ready", function() {
         }
     } );
 } );
+
+function createTrayIcon() {
+    trayIcon = new Tray( path.join( __dirname, "build/icon.ico" ) );
+    trayIcon.setToolTip( "Emojis Everywhere" );
+    setContextMenu( trayIcon );
+
+    return trayIcon;
+}
+
+function setContextMenu( trayIcon ) {
+    launcher.isEnabled()
+        .then(( isEnabled ) => {
+            const contextMenu = Menu.buildFromTemplate( [
+                {
+                    label: "Launch at startup",
+                    type: "checkbox",
+                    checked: isEnabled,
+                    click: () => toggleLaunchAtStartup( trayIcon )
+                },
+                {
+                    label: "Show",
+                    click: () => win.show()
+                },
+                {
+                    label: "Quit",
+                    click: app.quit
+                }
+            ] );
+            trayIcon.setContextMenu( contextMenu );
+        } )
+        .catch( function( err ) {
+            dialog.showErrorBox( "Error", err );
+        } );
+}
 
 function createWindow() {
 
@@ -52,17 +73,17 @@ function createWindow() {
     return win;
 }
 
-let launcher = new AutoLaunch({ name: "Emojis Everywhere" });
-
-launcher.enable();
-
-launcher.isEnabled()
-.then(function(isEnabled){
-    if(isEnabled){
-        return;
-    }
-    launcher.enable();
-})
-.catch(function(err){
-    dialog.showErrorBox("Error", "An error happened: " + err);
-});
+function toggleLaunchAtStartup( trayIcon ) {
+    launcher.isEnabled()
+        .then(( isEnabled ) => {
+            if ( isEnabled ) {
+                launcher.disable()
+            } else {
+                launcher.enable();
+            }
+            setContextMenu( trayIcon );
+        } )
+        .catch( function( err ) {
+            dialog.showErrorBox( "Error", err );
+        } );
+}
