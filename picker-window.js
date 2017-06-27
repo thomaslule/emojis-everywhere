@@ -2,7 +2,7 @@ const { BrowserWindow } = require( "electron" );
 const path = require( "path" );
 const url = require( "url" );
 
-let EmojisWindow = function() {
+let PickerWindow = function() {
     // Create the browser window.
     this.win = new BrowserWindow( { fullscreen: true, transparent: true, frame: false, show: false } );
 
@@ -17,7 +17,7 @@ let EmojisWindow = function() {
     // win.webContents.openDevTools()
 }
 
-EmojisWindow.prototype.toggleShow = function() {
+PickerWindow.prototype.toggleShow = function() {
     if ( this.win.isVisible() ) {
         this.win.hide();
     } else {
@@ -25,8 +25,8 @@ EmojisWindow.prototype.toggleShow = function() {
     }
 }
 
-EmojisWindow.prototype.show = function() {
+PickerWindow.prototype.show = function() {
     this.win.show();
 }
 
-module.exports = EmojisWindow;
+module.exports = PickerWindow;

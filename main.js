@@ -1,26 +1,31 @@
 const { app, globalShortcut } = require( "electron" );
-const EmojisWindow = require( "./emojis-window" );
+const PickerWindow = require( "./picker-window" );
 const TrayIcon = require( "./tray-icon" );
-const StartupLauncher = require("./startup-launcher");
+const StartupLauncher = require( "./startup-launcher" );
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let win, trayIcon, launcher;
+let EmojiEverywhere = function( app ) {
+    this.app = app;
+    this.app.on( "ready", () => this.initialize() );
+}
 
-app.on( "ready", function() {
-    win = new EmojisWindow();
-    launcher = new StartupLauncher();
-    launcher.isAutoLaunch()
-        .then(( autoLaunch ) => {
-            trayIcon = new TrayIcon( autoLaunch,
-                {
-                    onClickShow: () => win.show(),
-                    onClickQuit: () => app.quit(),
-                    onClickLaunchAtStartup: () => 
-                        launcher.toggleAutoLaunch( )
-                        .then((autoLaunch) => trayIcon.updateContextMenu(autoLaunch))
-                } );
+EmojiEverywhere.prototype.initialize = function() {
+    this.picker = new PickerWindow();
+    this.launcher = new StartupLauncher();
+    this.launcher.isAutoLaunch()
+        .then(( autoLaunch ) => this.createTrayIcon( autoLaunch ) );
+
+    globalShortcut.register( "CommandOrControl+Alt+A", () => this.picker.toggleShow() );
+}
+
+EmojiEverywhere.prototype.createTrayIcon = function( autoLaunch ) {
+    this.trayIcon = new TrayIcon( autoLaunch,
+        {
+            onClickShow: () => this.picker.show(),
+            onClickQuit: () => this.app.quit(),
+            onClickLaunchAtStartup: () => this.launcher.toggleAutoLaunch()
+                .then(( autoLaunch ) => this.trayIcon.updateContextMenu( autoLaunch ) )
         } );
+}
 
-    globalShortcut.register( "CommandOrControl+Alt+A", () => win.toggleShow() );
-} );
+// keep a reference to avoid garbage collecting
+let ee = new EmojiEverywhere( app );
