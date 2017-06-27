@@ -17,6 +17,10 @@ TrayIcon.prototype.updateContextMenu = function( launchAtStartup ) {
             click: this.callbacks.onClickLaunchAtStartup
         },
         {
+            label: "Set global shortcut",
+            click: this.callbacks.onClickSetGlobalShortcut
+        },
+        {
             label: "Show",
             click: this.callbacks.onClickShow
         },
