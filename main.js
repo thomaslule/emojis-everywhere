@@ -1,43 +1,26 @@
-const { app, globalShortcut, dialog } = require( "electron" );
-const AutoLaunch = require( "auto-launch" );
-const EmojisWindow = require( "./emojis-window.js" );
-const TrayIcon = require( "./tray-icon.js" );
+const { app, globalShortcut } = require( "electron" );
+const EmojisWindow = require( "./emojis-window" );
+const TrayIcon = require( "./tray-icon" );
+const StartupLauncher = require("./startup-launcher");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win, trayIcon;
-let launcher = new AutoLaunch( { name: "Emojis Everywhere" } );
+let win, trayIcon, launcher;
 
 app.on( "ready", function() {
     win = new EmojisWindow();
-    launcher.isEnabled()
-        .then(( isEnabled ) => {
-            trayIcon = new TrayIcon( isEnabled,
+    launcher = new StartupLauncher();
+    launcher.isAutoLaunch()
+        .then(( autoLaunch ) => {
+            trayIcon = new TrayIcon( autoLaunch,
                 {
                     onClickShow: () => win.show(),
                     onClickQuit: () => app.quit(),
-                    onClickLaunchAtStartup: () => toggleLaunchAtStartup( trayIcon )
+                    onClickLaunchAtStartup: () => 
+                        launcher.toggleAutoLaunch( )
+                        .then((autoLaunch) => trayIcon.updateContextMenu(autoLaunch))
                 } );
-        } )
-        .catch( function( err ) {
-            dialog.showErrorBox( "Error", err );
         } );
 
     globalShortcut.register( "CommandOrControl+Alt+A", () => win.toggleShow() );
 } );
-
-function toggleLaunchAtStartup( trayIcon ) {
-    launcher.isEnabled()
-        .then(( isEnabled ) => {
-            if ( isEnabled ) {
-                launcher.disable()
-                trayIcon.updateContextMenu( false );
-            } else {
-                launcher.enable();
-                trayIcon.updateContextMenu( true );
-            }
-        } )
-        .catch( function( err ) {
-            dialog.showErrorBox( "Error", err );
-        } );
-}
