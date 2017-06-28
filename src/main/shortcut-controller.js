@@ -15,7 +15,8 @@ let ShortcutController = function( onShortcut ) {
 }
 
 ShortcutController.prototype.displayShortcutWindow = function() {
-    let win = new BrowserWindow();
+    let win = new BrowserWindow({ width: 400, height: 200 });
+    win.setMenu(null);
     win.loadURL( url.format( {
         pathname: path.join( appRootDir, "src", "renderers", "shortcut-setter.html" ),
         search: `shortcut=${settings.get( "shortcut" )}`,

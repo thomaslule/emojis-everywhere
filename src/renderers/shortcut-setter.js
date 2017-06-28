@@ -10,19 +10,28 @@ const ShortcutSetter = createReactClass( {
             shortcut: ""
         };
     },
-
+    
     render: function() {
         return React.createElement( "div", null,
             React.createElement( "p", null, "Current shortcut is: " + this.getCurrentShortcut()),
             React.createElement( "input", {
                 type: "text",
                 onKeyDown: ( e ) => this.handleKeyDown( e ),
-                value: this.state.shortcut
+                value: this.state.shortcut,
+                placeholder: "New shortcut",
+                ref: (input) => { this.input = input; }
             } ),
             React.createElement( "button", {
                 onClick: () => this.handleOK()
-            }, "OK" )
+            }, "OK" ),
+            React.createElement( "button", {
+                onClick: () => this.handleCancel()
+            }, "Cancel" )
         );
+    },
+
+    componentDidMount: function() {
+        this.input.focus();
     },
 
     handleKeyDown: function( e ) {
@@ -35,6 +44,10 @@ const ShortcutSetter = createReactClass( {
 
     handleOK: function() {
         ipcRenderer.send( "shortcut-changed", this.state.shortcut );
+        remote.getCurrentWindow().close();
+    },
+
+    handleCancel: function() {
         remote.getCurrentWindow().close();
     },
     
