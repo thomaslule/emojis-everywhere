@@ -3,6 +3,7 @@ const PickerController = require( "./picker-controller" );
 const TrayIcon = require( "./tray-icon" );
 const StartupLauncher = require( "./startup-launcher" );
 const ShortcutController = require( "./shortcut-controller" );
+const settings = require( "electron-settings" );
 
 let EmojiEverywhere = function( app ) {
     this.app = app;
@@ -11,10 +12,18 @@ let EmojiEverywhere = function( app ) {
 
 EmojiEverywhere.prototype.initialize = function() {
     this.pickerController = new PickerController();
-    this.shortcutController = new ShortcutController(() => this.pickerController.toggleShow());
+    this.shortcutController = new ShortcutController(() => this.pickerController.toggleShow() );
     this.launcher = new StartupLauncher();
-    this.launcher.isAutoLaunch()
-        .then(( autoLaunch ) => this.createTrayIcon( autoLaunch ) );
+
+    if ( !settings.has( "already-launched" ) ) {
+        // first launch!
+        settings.set( "already-launched", true );
+        this.launcher.enableAutoLaunch();
+        this.createTrayIcon( true );
+    } else {
+        this.launcher.isAutoLaunch()
+            .then(( autoLaunch ) => this.createTrayIcon( autoLaunch ) );
+    }
 }
 
 EmojiEverywhere.prototype.createTrayIcon = function( autoLaunch ) {

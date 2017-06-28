@@ -12,6 +12,10 @@ StartupLauncher.prototype.isAutoLaunch = function() {
         } );
 }
 
+StartupLauncher.prototype.enableAutoLaunch = function() {
+    this.autoLaunch.enable();
+}
+
 StartupLauncher.prototype.toggleAutoLaunch = function() {
     return this.isAutoLaunch()
         .then(( autoLaunch ) => {
