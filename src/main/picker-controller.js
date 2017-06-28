@@ -1,23 +1,24 @@
 const { BrowserWindow } = require( "electron" );
 const path = require( "path" );
 const url = require( "url" );
+const appRootDir = require("app-root-dir").get();
 
-let PickerWindow = function() {
+let PickerController = function() {
     // Create the browser window.
     this.win = new BrowserWindow( { fullscreen: true, transparent: true, frame: false, show: false } );
 
     // and load the index.html of the app.
     this.win.loadURL( url.format( {
-        pathname: path.join( __dirname, "index.html" ),
+        pathname: path.join( appRootDir, "src", "renderers", "picker.html" ),
         protocol: "file:",
         slashes: true
     } ) );
 
     // Open the DevTools.
-    // win.webContents.openDevTools()
+    // this.win.webContents.openDevTools();
 }
 
-PickerWindow.prototype.toggleShow = function() {
+PickerController.prototype.toggleShow = function() {
     if ( this.win.isVisible() ) {
         this.win.hide();
     } else {
@@ -25,8 +26,8 @@ PickerWindow.prototype.toggleShow = function() {
     }
 }
 
-PickerWindow.prototype.show = function() {
+PickerController.prototype.show = function() {
     this.win.show();
 }
 
-module.exports = PickerWindow;
+module.exports = PickerController;

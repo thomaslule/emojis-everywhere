@@ -1,9 +1,10 @@
 const { Tray, Menu } = require( "electron" );
 const path = require( "path" );
+const appRootDir = require("app-root-dir").get();
 
 let TrayIcon = function( launchAtStartup, callbacks ) {
     this.callbacks = callbacks;
-    this.tray = new Tray( path.join( __dirname, "build/icon.ico" ) );
+    this.tray = new Tray( path.join( appRootDir, "build", "icon.ico" ) );
     this.tray.setToolTip( "Emojis Everywhere" );
     this.updateContextMenu( launchAtStartup );
 }
