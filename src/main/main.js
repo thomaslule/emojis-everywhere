@@ -1,4 +1,4 @@
-const { app, globalShortcut } = require( "electron" );
+const { app } = require( "electron" );
 const PickerController = require( "./picker-controller" );
 const TrayIcon = require( "./tray-icon" );
 const StartupLauncher = require( "./startup-launcher" );
@@ -11,12 +11,10 @@ let EmojiEverywhere = function( app ) {
 
 EmojiEverywhere.prototype.initialize = function() {
     this.pickerController = new PickerController();
-    this.shortcutController = new ShortcutController();
+    this.shortcutController = new ShortcutController(() => this.pickerController.toggleShow());
     this.launcher = new StartupLauncher();
     this.launcher.isAutoLaunch()
         .then(( autoLaunch ) => this.createTrayIcon( autoLaunch ) );
-
-    globalShortcut.register( "CommandOrControl+Alt+A", () => this.pickerController.toggleShow() );
 }
 
 EmojiEverywhere.prototype.createTrayIcon = function( autoLaunch ) {

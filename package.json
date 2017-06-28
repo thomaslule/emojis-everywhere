@@ -5,6 +5,7 @@
 	"main": "src/main/main.js",
 	"scripts": {
 		"start": "electron .",
+		"test": "mocha -w test/**/*.js",
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder",
 		"postinstall": "electron-builder install-app-deps"
@@ -21,14 +22,17 @@
 		"app-root-dir": "^1.0.2",
 		"auto-launch": "^5.0.1",
 		"create-react-class": "^15.6.0",
+		"electron-settings": "^3.1.1",
 		"emojione-picker": "^2.2.1",
 		"react": "^15.6.1",
 		"react-click-outside": "github:tj/react-click-outside",
 		"react-dom": "^15.6.1"
 	},
 	"devDependencies": {
+		"chai": "^4.0.2",
 		"electron": "^1.6.11",
-		"electron-builder": "^19.8.0"
+		"electron-builder": "^19.8.0",
+		"mocha": "^3.4.2"
 	},
 	"build": {
 		"appId": "fr.lule.emojis-everywhere",
