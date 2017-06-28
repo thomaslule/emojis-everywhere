@@ -38,3 +38,9 @@ const App = createReactClass( {
 ReactDOM.render(
     React.createElement( App ),
     document.getElementById( "root" ) );
+
+document.body.addEventListener("keydown", (e) => {
+    if (e.keyCode == 27) { // ESCAPE
+        remote.getCurrentWindow().hide();
+    }
+});
