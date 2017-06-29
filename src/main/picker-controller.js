@@ -28,7 +28,6 @@ PickerController.prototype.toggleShow = function() {
 
 PickerController.prototype.show = function() {
     this.win.show();
-    this.win.webContents.send("picker-showed");
 }
 
 module.exports = PickerController;

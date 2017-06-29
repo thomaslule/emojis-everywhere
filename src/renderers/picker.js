@@ -1,4 +1,4 @@
-const { clipboard, remote, ipcRenderer } = require( "electron" );
+const { clipboard, remote } = require( "electron" );
 const React = require( "react" );
 const ReactDOM = require( "react-dom" );
 const createReactClass = require( "create-react-class" );
@@ -36,7 +36,7 @@ const App = createReactClass( {
     },
 
     componentDidMount: function() {
-        ipcRenderer.on( "picker-showed", ( event, message ) => {
+        remote.getCurrentWindow().on( "hide", ( event, message ) => {
             // force the picker to re-render to clear its previous search and set focus to the field
             this.setState( { key: Math.random() } );
         } );
