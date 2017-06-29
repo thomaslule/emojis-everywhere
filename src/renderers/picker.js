@@ -20,7 +20,13 @@ const App = createReactClass( {
                     imageType: 'png',
                     sprites: true
                 }
-            } )
+            } ),
+
+            React.createElement( "p", { className: "instructions" },
+                "Click an emoji to copy it to your clipboard.",
+                React.createElement( "br" ),
+                "Paste it anywhere."
+            )
         );
     },
 
@@ -39,8 +45,8 @@ ReactDOM.render(
     React.createElement( App ),
     document.getElementById( "root" ) );
 
-document.body.addEventListener("keydown", (e) => {
-    if (e.keyCode == 27) { // ESCAPE
+document.body.addEventListener( "keydown", ( e ) => {
+    if ( e.keyCode == 27 ) { // ESCAPE
         remote.getCurrentWindow().hide();
     }
-});
+} );
