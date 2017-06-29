@@ -1,4 +1,4 @@
-const { clipboard, remote } = require( "electron" );
+const { clipboard, remote, ipcRenderer } = require( "electron" );
 const React = require( "react" );
 const ReactDOM = require( "react-dom" );
 const createReactClass = require( "create-react-class" );
@@ -28,6 +28,12 @@ const App = createReactClass( {
                 "Paste it everywhere."
             )
         );
+    },
+
+    componentDidMount: function() {
+        ipcRenderer.on( "picker-showed", ( event, message ) => {
+            document.querySelector(".emoji-search").focus();
+        } );
     },
 
     handleChange: function( data ) {

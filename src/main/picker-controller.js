@@ -22,12 +22,13 @@ PickerController.prototype.toggleShow = function() {
     if ( this.win.isVisible() ) {
         this.win.hide();
     } else {
-        this.win.show();
+        this.show();
     }
 }
 
 PickerController.prototype.show = function() {
     this.win.show();
+    this.win.webContents.send("picker-showed");
 }
 
 module.exports = PickerController;
