@@ -1,9 +1,10 @@
 const { app } = require( "electron" );
+const settings = require( "electron-settings" );
 const PickerController = require( "./picker-controller" );
 const TrayIcon = require( "./tray-icon" );
 const StartupLauncher = require( "./startup-launcher" );
 const ShortcutController = require( "./shortcut-controller" );
-const settings = require( "electron-settings" );
+const about = require("./about");
 
 let EmojiEverywhere = function( app ) {
     this.app = app;
@@ -31,6 +32,7 @@ EmojiEverywhere.prototype.createTrayIcon = function( autoLaunch ) {
         {
             onClickShow: () => this.pickerController.show(),
             onClickQuit: () => this.app.quit(),
+            onClickAbout: () => about(),
             onClickSetGlobalShortcut: () => this.shortcutController.displayShortcutWindow(),
             onClickLaunchAtStartup: () => this.launcher.toggleAutoLaunch()
                 .then(( autoLaunch ) => this.trayIcon.updateContextMenu( autoLaunch ) )

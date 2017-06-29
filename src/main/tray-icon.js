@@ -1,6 +1,6 @@
 const { Tray, Menu } = require( "electron" );
 const path = require( "path" );
-const appRootDir = require("app-root-dir").get();
+const appRootDir = require( "app-root-dir" ).get();
 
 let TrayIcon = function( launchAtStartup, callbacks ) {
     this.callbacks = callbacks;
@@ -11,6 +11,10 @@ let TrayIcon = function( launchAtStartup, callbacks ) {
 
 TrayIcon.prototype.updateContextMenu = function( launchAtStartup ) {
     const contextMenu = Menu.buildFromTemplate( [
+        {
+            label: "About",
+            click: this.callbacks.onClickAbout
+        },
         {
             label: "Launch at startup",
             type: "checkbox",
