@@ -7,6 +7,10 @@ const ClickOutside = require( "react-click-outside" ).default;
 
 const App = createReactClass( {
 
+    getInitialState: function() {
+        return { key: Math.random() };
+    },
+
     render: function() {
         return React.createElement(
 
@@ -19,7 +23,8 @@ const App = createReactClass( {
                 emojione: {
                     imageType: 'png',
                     sprites: true
-                }
+                },
+                key: this.state.key
             } ),
 
             React.createElement( "p", { className: "instructions" },
@@ -32,7 +37,8 @@ const App = createReactClass( {
 
     componentDidMount: function() {
         ipcRenderer.on( "picker-showed", ( event, message ) => {
-            document.querySelector(".emoji-search").focus();
+            // force the picker to re-render to clear its previous search and set focus to the field
+            this.setState( { key: Math.random() } );
         } );
     },
 
