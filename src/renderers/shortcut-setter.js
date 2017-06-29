@@ -13,7 +13,7 @@ const ShortcutSetter = createReactClass( {
     
     render: function() {
         return React.createElement( "div", null,
-            React.createElement( "p", null, "Current shortcut is: " + this.getCurrentShortcut()),
+            React.createElement( "p", { className: "current" }, "Current shortcut is: " + this.getCurrentShortcut()),
             React.createElement( "input", {
                 type: "text",
                 onKeyDown: ( e ) => this.handleKeyDown( e ),

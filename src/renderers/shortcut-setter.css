@@ -11,5 +11,9 @@ body {
 	bottom: 0;
 	left: 0;
 	width: 285px;
-	height: 85px;
+	height: 75px;
+}
+
+.current {
+	margin-top: 0px;
 }
