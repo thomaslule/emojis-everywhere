@@ -37,6 +37,9 @@
 	"build": {
 		"appId": "fr.lule.emojis-everywhere",
 		"productName": "Emojis Everywhere",
-		"files": [ "!node_modules/emojione/assets" ]
+		"files": [ "!node_modules/emojione/assets" ],
+		"nsis": {
+			"deleteAppDataOnUninstall": true
+		}
 	}
 }
