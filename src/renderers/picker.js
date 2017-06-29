@@ -25,7 +25,7 @@ const App = createReactClass( {
             React.createElement( "p", { className: "instructions" },
                 "Click an emoji to copy it to your clipboard.",
                 React.createElement( "br" ),
-                "Paste it anywhere."
+                "Paste it everywhere."
             )
         );
     },
