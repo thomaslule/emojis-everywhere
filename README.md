@@ -7,9 +7,22 @@ This tool allows you to invoke an emoji picker from any app, by pressing a keybo
 
 **[Download it here.](https://github.com/thomaslule/emojis-everywhere/raw/master/dist/Emojis%20Everywhere%20Setup%201.0.1.exe)**
 
+## Technical things
+
 I made this app by throwing some nice libraries together then watching the magic happen:
 
 * [emojione-picker](https://github.com/tommoor/emojione-picker) by Tom Moor
 * [Electron](https://electron.atom.io/) by GitHub
-* [electron-builder](https://github.com/electron-userland/electron-builder) by electron's community
+* [electron-builder](https://github.com/electron-userland/electron-builder) by Electron's community
 * [React](https://facebook.github.io/react/) by Facebook
+
+To build the app yourself you can clone this repository then:
+
+````bash
+yarn install # install the dependencies
+yarn run # launch the app in dev mode
+yarn test # launch unit tests
+yarn build # build the installer
+````
+    
+You can also use npm but it isn't recommanded for the `build` command.
