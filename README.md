@@ -1,11 +1,11 @@
-App not yet released, please be patient.
-
 # Emojis Everywhere
 Do you like emojis? :thumbsup:
 
 This tool allows you to invoke an emoji picker from any app, by pressing a keyboard shortcut.
 
 ![screenshot of the app](https://raw.githubusercontent.com/thomaslule/emojis-everywhere/master/assets/screenshot.png)
+
+**[Download it here.](https://github.com/thomaslule/emojis-everywhere/raw/master/dist/Emojis%20Everywhere%20Setup%201.0.1.exe)**
 
 I made this app by throwing some nice libraries together then watching the magic happen:
 
