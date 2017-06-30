@@ -4,6 +4,7 @@ const ReactDOM = require( "react-dom" );
 const createReactClass = require( "create-react-class" );
 const EmojiPicker = require( "emojione-picker" ).default;
 const ClickOutside = require( "react-click-outside" ).default;
+const codepointToString = require( "./codepoint-to-string" );
 
 const App = createReactClass( {
 
@@ -43,7 +44,7 @@ const App = createReactClass( {
     },
 
     handleChange: function( data ) {
-        clipboard.writeText( String.fromCodePoint( +( "0x" + data.unicode ) ) );
+        clipboard.writeText( codepointToString( data.unicode ) );
         remote.getCurrentWindow().hide();
     },
 
