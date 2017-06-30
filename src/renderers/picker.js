@@ -63,3 +63,6 @@ document.body.addEventListener( "keydown", ( e ) => {
         remote.getCurrentWindow().hide();
     }
 } );
+
+// disable titles, they seem bugged on fullscreen/transparent windows
+document.body.addEventListener( "mouseover", ( e ) => e.target.title = "" );
