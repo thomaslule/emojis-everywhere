@@ -20,7 +20,7 @@ To build the app yourself you can clone this repository then:
 
 ````bash
 yarn install # install the dependencies
-yarn run # launch the app in dev mode
+yarn start # launch the app in dev mode
 yarn test # launch unit tests
 yarn build # build the installer
 ````
