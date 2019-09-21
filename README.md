@@ -1,3 +1,5 @@
+# This tool is abandonned! Windows 10 now has a native emoji keyboard, just press <kbd>⊞ Windows</kbd>+<kbd>;</kbd>
+
 # Emojis Everywhere
 Do you like emojis? :thumbsup:
 
